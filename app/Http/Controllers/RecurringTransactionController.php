@@ -51,6 +51,7 @@ class RecurringTransactionController extends Controller
             'start_date',
         ]);
         $recurringTransaction = $this->recurringTransactionRepository->createRecurringTransaction($recurringTransactionData);
+        $this->recurringTransactionRepository->createRecurringTransactionActivity($recurringTransaction, 'Transacción recurrente creada', 'Se ha creado la transacción ' . $recurringTransaction->name);
         return redirect()->route('recurring_transactions.index', $recurringTransaction->account_id);
     }
 
@@ -85,6 +86,7 @@ class RecurringTransactionController extends Controller
             'amount',
         ]);
         $this->recurringTransactionRepository->updateRecurringTransaction($recurringTransaction, $recurringTransactionData);
+        $this->recurringTransactionRepository->createRecurringTransactionActivity($recurringTransaction, 'Transacción recurrente actualizada', 'Se ha actualizado la transacción ' . $recurringTransaction->name);
         return redirect()->route('recurring_transactions.index', $recurringTransaction->account_id);
     }
 }

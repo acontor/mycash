@@ -52,7 +52,7 @@ class RecurringTransactionRepository implements RecurringTransactionRepositoryIn
             'user_id'       => auth()->user()->id,
             'type'          => 'recurring_transaction',
             'model_id'      => $recurringTransaction->id,
-            'action'        => '/transactions/' . $recurringTransaction->id,
+            'action'        => '/recurring-transactions/' . $recurringTransaction->id,
         ]);
     }
 

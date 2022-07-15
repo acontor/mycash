@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Activity;
 use App\Models\RecurringTransaction;
 use App\Models\Transaction;
 use Carbon\Carbon;
@@ -41,6 +42,15 @@ class RecurringTransactionsCommand extends Command
             $transaction->user_id       = $recurringTransaction->user_id;
             $transaction->category_id   = $recurringTransaction->category_id;
             $transaction->save();
+
+            Activity::create([
+                'name'          => 'Cobro realizado',
+                'description'   => 'Se ha realizado el cobro de la transacción recurrente ' . $recurringTransaction->name,
+                'user_id'       => auth()->user()->id,
+                'type'          => 'recurring_transaction',
+                'model_id'      => $recurringTransaction->id,
+                'action'        => '/recurring_transaction/' . $recurringTransaction->id,
+            ]);
 
             if ($recurringTransaction->remaining) {
                 $recurringTransaction->remaining = $recurringTransaction->remaining - 1;

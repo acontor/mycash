@@ -113,7 +113,7 @@ class TransactionController extends Controller
     {
         $transaction->delete();
         $this->transactionRepository->deleteBalanceAccount($transaction);
-        $this->transactionRepository->createTransactionActivity($transaction, 'Transacción eliminada', 'Se ha actualizado la transacción ' . $transaction->name);
+        $this->transactionRepository->createTransactionActivity($transaction, 'Transacción eliminada', 'Se ha eliminado la transacción ' . $transaction->name);
         return redirect()->route('accounts.show', $transaction->account_id);
     }
 }
