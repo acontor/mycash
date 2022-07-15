@@ -11,5 +11,4 @@ interface RecurringTransactionRepositoryInterface
     public function getRecurringTransactionById($recurringTransactionId): RecurringTransaction;
     public function createRecurringTransaction(array $recurringTansactionData): RecurringTransaction;
     public function updateRecurringTransaction($recurringTransaction, array $recurringTransactionData);
-    public function createRecurringTransactionActivity($recurringTransaction, $name, $description);
 }

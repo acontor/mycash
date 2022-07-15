@@ -9,5 +9,4 @@ interface AccountRepositoryInterface
     public function createAccount(array $accountData);
     public function updateAccount($account, array $accountData);
     public function deleteAccount($accountId);
-    public function createAccountActivity($accountId, $name, $description);
 }

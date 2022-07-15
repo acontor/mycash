@@ -51,16 +51,4 @@ class AccountRepository implements AccountRepositoryInterface
         Activity::whereAccountId($accountId)->delete();
         Account::destroy($accountId);
     }
-
-    public function createAccountActivity($account, $name, $description)
-    {
-        return Activity::create([
-            'name'          => $name,
-            'description'   => $description,
-            'user_id'       => auth()->user()->id,
-            'type'          => 'account',
-            'model_id'      => $account->id,
-            'action'        => '/accounts/' . $account->id,
-        ]);
-    }
 }

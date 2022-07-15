@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ActivityEvent;
 use App\Http\Requests\StoreRecurringTransactionRequest;
 use App\Http\Requests\UpdateRecurringTransactionRequest;
 use App\Interfaces\RecurringTransactionRepositoryInterface;
@@ -51,7 +52,7 @@ class RecurringTransactionController extends Controller
             'start_date',
         ]);
         $recurringTransaction = $this->recurringTransactionRepository->createRecurringTransaction($recurringTransactionData);
-        $this->recurringTransactionRepository->createRecurringTransactionActivity($recurringTransaction, 'Transacción recurrente creada', 'Se ha creado la transacción ' . $recurringTransaction->name);
+        event(new ActivityEvent($recurringTransaction, 'recurring_transaction', 'Transacción recurrente creada', 'Se ha creado la transacción ' . $recurringTransaction->name, '/recurring_transactions/' . $recurringTransaction->id));
         return redirect()->route('recurring_transactions.index', $recurringTransaction->account_id);
     }
 
@@ -86,7 +87,7 @@ class RecurringTransactionController extends Controller
             'amount',
         ]);
         $this->recurringTransactionRepository->updateRecurringTransaction($recurringTransaction, $recurringTransactionData);
-        $this->recurringTransactionRepository->createRecurringTransactionActivity($recurringTransaction, 'Transacción recurrente actualizada', 'Se ha actualizado la transacción ' . $recurringTransaction->name);
+        event(new ActivityEvent($recurringTransaction, 'recurring_transaction', 'Transacción recurrente actualizada', 'Se ha actualizado la transacción ' . $recurringTransaction->name, '/recurring_transactions/' . $recurringTransaction->id));
         return redirect()->route('recurring_transactions.index', $recurringTransaction->account_id);
     }
 }

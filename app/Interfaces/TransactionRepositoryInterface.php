@@ -11,5 +11,4 @@ interface TransactionRepositoryInterface
     public function createBalanceAccount($transaction);
     public function updateBalanceAccount($transaction, $befre_amount);
     public function deleteBalanceAccount($transaction);
-    public function createTransactionActivity($transactionId, $name, $description);
 }

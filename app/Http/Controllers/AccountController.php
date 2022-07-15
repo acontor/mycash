@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ActivityEvent;
 use App\Http\Requests\StoreAccountRequest;
 use App\Http\Requests\UpdateAccountRequest;
 use App\Interfaces\AccountRepositoryInterface;
@@ -58,7 +59,7 @@ class AccountController extends Controller
             'main',
         ]);
         $account = $this->accountRepository->createAccount($accountData);
-        $this->accountRepository->createAccountActivity($account, 'Cuenta creada', 'Se ha creado la cuenta ' . $account->name);
+        event(new ActivityEvent($account, 'account', 'Cuenta creada', 'Se ha creado la cuenta ' . $account->name, '/accounts/' . $account->id));
         return redirect()->route('accounts.index');
     }
 
@@ -88,13 +89,14 @@ class AccountController extends Controller
             'main',
         ]);
         $this->accountRepository->updateAccount($account, $accountData);
-        $this->accountRepository->createAccountActivity($account, 'Cuenta actualizada', 'Se ha actualizado la cuenta ' . $account->name);
+        event(new ActivityEvent($account, 'account', 'Cuenta actualizada', 'Se ha actualizado la cuenta ' . $account->name, '/accounts/' . $account->id));
         return redirect()->route('accounts.index');
     }
 
-    public function destroy($accountId)
+    public function destroy(Account $account)
     {
-        $this->accountRepository->deleteAccount($accountId);
+        $this->accountRepository->deleteAccount($account);
+        event(new ActivityEvent($account, 'account', 'Cuenta eliminada', 'Se ha eliminado la cuenta ' . $account->name, '/accounts/' . $account->id));
         return redirect()->route('accounts.index');
     }
 }

@@ -39,7 +39,6 @@ class TransactionRepository implements TransactionRepositoryInterface
 
     public function deleteTransaction($transactionId)
     {
-        Activity::whereTransactionId($transactionId)->delete();
         Transaction::destroy($transactionId);
     }
 
@@ -62,17 +61,5 @@ class TransactionRepository implements TransactionRepositoryInterface
         $account = $transaction->account;
         $account->balance -= $transaction->amount;
         $account->save();
-    }
-
-    public function createTransactionActivity($transaction, $name, $description)
-    {
-        return Activity::create([
-            'name'          => $name,
-            'description'   => $description,
-            'user_id'       => auth()->user()->id,
-            'type'          => 'transaction',
-            'model_id'      => $transaction->id,
-            'action'        => '/transactions/' . $transaction->id,
-        ]);
     }
 }

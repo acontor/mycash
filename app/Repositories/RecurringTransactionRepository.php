@@ -44,18 +44,6 @@ class RecurringTransactionRepository implements RecurringTransactionRepositoryIn
         ]);
     }
 
-    public function createRecurringTransactionActivity($recurringTransaction, $name, $description)
-    {
-        return Activity::create([
-            'name'          => $name,
-            'description'   => $description,
-            'user_id'       => auth()->user()->id,
-            'type'          => 'recurring_transaction',
-            'model_id'      => $recurringTransaction->id,
-            'action'        => '/recurring-transactions/' . $recurringTransaction->id,
-        ]);
-    }
-
     private function getNextDate($startDate)
     {
         return now()->diffInDays($startDate) > 0 ? $startDate : now();

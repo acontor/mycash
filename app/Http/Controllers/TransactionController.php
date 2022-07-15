@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ActivityEvent;
 use App\Http\Requests\StoreTransactionRequest;
 use App\Http\Requests\UpdateTransactionRequest;
 use App\Interfaces\TransactionRepositoryInterface;
@@ -47,7 +48,7 @@ class TransactionController extends Controller
         ]);
         $transaction = $this->transactionRepository->createTransaction($transactionData);
         $this->transactionRepository->createBalanceAccount($transaction);
-        $this->transactionRepository->createTransactionActivity($transaction, 'Transacción creada', 'Se ha creado la transacción ' . $transaction->name);
+        event(new ActivityEvent($transaction, 'transaction', 'Transacción creada', 'Se ha creado la transacción ' . $transaction->name, '/transactions/' . $transaction->id));
         return redirect()->route('accounts.show', $transaction->account_id);
     }
 
@@ -99,7 +100,7 @@ class TransactionController extends Controller
         $before_amount = $transaction->amount;
         $this->transactionRepository->updateTransaction($transaction, $transactionData);
         $this->transactionRepository->updateBalanceAccount($transaction, $before_amount);
-        $this->transactionRepository->createTransactionActivity($transaction, 'Transacción actualizada', 'Se ha actualizado la transacción ' . $transaction->name);
+        event(new ActivityEvent($transaction, 'transaction', 'Transacción actualizada', 'Se ha actualizado la transacción ' . $transaction->name, '/transactions/' . $transaction->id));
         return redirect()->route('accounts.show', $transaction->account_id);
     }
 
@@ -111,9 +112,9 @@ class TransactionController extends Controller
      */
     public function destroy(Transaction $transaction)
     {
-        $transaction->delete();
+        $this->transactionRepository->deleteTransaction($transaction);
         $this->transactionRepository->deleteBalanceAccount($transaction);
-        $this->transactionRepository->createTransactionActivity($transaction, 'Transacción eliminada', 'Se ha eliminado la transacción ' . $transaction->name);
+        event(new ActivityEvent($transaction, 'transaction', 'Transacción eliminada', 'Se ha eliminado la transacción ' . $transaction->name, '/transactions/' . $transaction->id));
         return redirect()->route('accounts.show', $transaction->account_id);
     }
 }
