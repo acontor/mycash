@@ -31,19 +31,29 @@
                 <label for="description">{{ __('Descripción') }}</label>
             </div>
             <div class="form-floating mb-3">
-                <select class="form-control" name="category_id">
+                <select class="form-control @error('category_id') is-invalid @enderror" name="category_id">
                     <option value="">Seleccione una categoría</option>
                     @foreach (\App\Models\Category::where('type', 'accounts')->get() as $category)
                         <option value="{{ $category->id }}" {{ isset($account) && $account->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
                     @endforeach
                 </select>
                 <label for="category_id">{{ __('Categoría') }}</label>
+                @if ($errors->has('category_id'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('category_id') }}</strong>
+                    </span>
+                @endif
             </div>
             @if ($method == 'POST')
                 <div class="form-floating mb-3">
-                    <input type="number" class="form-control @error('balance') is-invalid @enderror" name="balance" id="balance" placeholder="Saldo" min="0.00" value="{{ old('balance', isset($account) ? $account->balance : '') }}" required>
+                    <input type="number" class="form-control @error('balance') is-invalid @enderror" name="balance" id="balance" placeholder="Saldo" step="any" value="{{ old('balance', isset($account) ? $account->balance : '') }}" required>
                     <label for="balance">{{ __('Saldo') }}</label>
                 </div>
+                @if ($errors->has('balance'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $errors->first('balance') }}</strong>
+                    </span>
+                @endif
             @endif
             <button type="submit" class="btn btn-primary btn-lg w-100">{{ __('Aceptar') }}</button>
         </form>

@@ -78,7 +78,7 @@
                 @endif
             </div>
             <div class="form-floating mb-4">
-                <input type="text" class="form-control @error('amount') is-invalid @enderror" name="amount" placeholder="Cantidad" value={{ old('amount', isset($recurringTransaction) ? $recurringTransaction->amount : '' )}} required>
+                <input type="number" class="form-control @error('amount') is-invalid @enderror" name="amount" placeholder="Cantidad" step="any" value={{ old('amount', isset($recurringTransaction) ? $recurringTransaction->amount : '' )}} required>
                 <label for="amount">{{ __('Cantidad') }}</label>
                 @if ($errors->has('amount'))
                     <span class="invalid-feedback" role="alert">

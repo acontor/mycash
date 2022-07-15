@@ -63,7 +63,7 @@
                 @endif
             </div>
             <div class="form-floating mb-4">
-                <input type="number" class="form-control @error('amount') is-invalid @enderror" name="amount" id="amount" min="0.00" placeholder="Cantidad" value="{{ old('amount', isset($transaction) ? $transaction->amount : '') }}" required>
+                <input type="number" class="form-control @error('amount') is-invalid @enderror" name="amount" id="amount" step="any" placeholder="Cantidad" value="{{ old('amount', isset($transaction) ? $transaction->amount : '') }}" required>
                 <label for="amount">{{ __('Cantidad') }}</label>
                 @if ($errors->has('amount'))
                     <span class="invalid-feedback" role="alert">
