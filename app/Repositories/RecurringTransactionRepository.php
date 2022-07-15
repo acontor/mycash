@@ -23,6 +23,7 @@ class RecurringTransactionRepository implements RecurringTransactionRepositoryIn
     {
         return RecurringTransaction::create([
             'name'          => $recurringTansactionData['name'],
+            'description'   => $recurringTansactionData['description'],
             'category_id'   => $recurringTansactionData['category_id'],
             'account_id'    => $recurringTansactionData['account_id'],
             'amount'        => $recurringTansactionData['amount'],

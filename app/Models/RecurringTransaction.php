@@ -16,6 +16,7 @@ class RecurringTransaction extends Model
         'amount',
         'date',
         'account_id',
+        'category_id',
         'start_date',
         'next_date',
     ];

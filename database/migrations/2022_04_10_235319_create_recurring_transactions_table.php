@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained('categories');
             $table->integer('remaining')->nullable();
             $table->string('name');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->string('frequency');
             $table->string('amount');
             $table->timestamp('start_date');
