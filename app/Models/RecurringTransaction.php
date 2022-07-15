@@ -19,6 +19,7 @@ class RecurringTransaction extends Model
         'category_id',
         'start_date',
         'next_date',
+        'remaining',
     ];
 
     /**

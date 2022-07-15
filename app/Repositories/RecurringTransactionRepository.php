@@ -29,6 +29,7 @@ class RecurringTransactionRepository implements RecurringTransactionRepositoryIn
             'amount'        => $recurringTansactionData['amount'],
             'frequency'     => $recurringTansactionData['frequency'],
             'start_date'    => $recurringTansactionData['start_date'],
+            'remaining'     => $recurringTansactionData['remaining'],
             'next_date'     => $this->getNextDate($recurringTansactionData['start_date']),
         ]);
     }

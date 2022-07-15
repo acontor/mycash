@@ -42,14 +42,16 @@ class RecurringTransactionsCommand extends Command
             $transaction->category_id   = $recurringTransaction->category_id;
             $transaction->save();
 
-            $recurringTransaction->remaining = $recurringTransaction->remaining - 1;
-            if ($recurringTransaction->remaining == 0) {
-                $recurringTransaction->active = false;
-                $recurringTransaction->next_date = null;
-            } else {
-                $recurringTransaction->next_date = Carbon::parse($recurringTransaction->next_date)->addMonths($recurringTransaction->frequency);
+            if ($recurringTransaction->remaining) {
+                $recurringTransaction->remaining = $recurringTransaction->remaining - 1;
+                if ($recurringTransaction->remaining == 0) {
+                    $recurringTransaction->active = false;
+                    $recurringTransaction->next_date = null;
+                } else {
+                    $recurringTransaction->next_date = Carbon::parse($recurringTransaction->next_date)->addMonths($recurringTransaction->frequency);
+                }
+                $recurringTransaction->save();
             }
-            $recurringTransaction->save();
         }
     }
 }
