@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('description');
-            $table->boolean('priority');
+            $table->string('type');
             $table->integer('user_id');
-            $table->integer('other_user_id')->nullable();
+            $table->integer('model_id');
             $table->string('action');
             $table->timestamps();
         });
