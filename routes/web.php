@@ -31,7 +31,10 @@ Route::middleware(['auth'])->group(function () {
     });
     Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('account');
 
-    Route::resource('accounts', AccountController::class)->middleware('account');
+    Route::resource('accounts', AccountController::class)->middleware('account')->except('create', 'store');
+    Route::get('/accounts',     [AccountController::class, 'create'])->name('accounts.create');
+    Route::post('/accounts',    [AccountController::class, 'store'])->name('accounts.store');
+
 
     Route::resource('transactions', TransactionController::class)->middleware('account');
 

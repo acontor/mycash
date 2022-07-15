@@ -28,15 +28,17 @@
         @yield('content')
     </div>
     @auth
-        <nav class="navbar fixed-bottom navbar-light bg-light">
-            <div class="container-fluid d-flex justify-content-evenly text-center">
-                <a href="{{ route('home') }}" class="text-dark"><i class="bi bi-house fs-4"></i></a>
-                <a href="{{ route('accounts.index') }}" class="text-dark"><i class="bi bi-wallet-fill fs-4"></i></a>
-                <a class="text-decoration-none" data-bs-toggle="offcanvas" href="#offcanvasBottom" role="button" aria-controls="offcanvasBottom"><i class="bi bi-patch-plus text-primary fs-4"></i></a>
-                <a href="{{ route('notifications.index') }}" class="text-dark"><i class="bi bi-clock-history fs-4"></i></a>
-                <a class="text-decoration-none text-dark" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample"><i class="bi bi-list fs-4"></i></a>
-            </div>
-        </nav>
+        @if (auth()->user()->acounts)
+            <nav class="navbar fixed-bottom navbar-light bg-light">
+                <div class="container-fluid d-flex justify-content-evenly text-center">
+                    <a href="{{ route('home') }}" class="text-dark"><i class="bi bi-house fs-4"></i></a>
+                    <a href="{{ route('accounts.index') }}" class="text-dark"><i class="bi bi-wallet-fill fs-4"></i></a>
+                    <a class="text-decoration-none" data-bs-toggle="offcanvas" href="#offcanvasBottom" role="button" aria-controls="offcanvasBottom"><i class="bi bi-patch-plus text-primary fs-4"></i></a>
+                    <a href="{{ route('notifications.index') }}" class="text-dark"><i class="bi bi-clock-history fs-4"></i></a>
+                    <a class="text-decoration-none text-dark" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample"><i class="bi bi-list fs-4"></i></a>
+                </div>
+            </nav>
+        @endif
         <div class="offcanvas offcanvas-bottom rounded-top rounded-3 h-100" tabindex="-1" id="offcanvasBottom"
             aria-labelledby="offcanvasBottomLabel" data-bs-backdrop="true">
             <div class="offcanvas-header">
