@@ -28,7 +28,7 @@
         @yield('content')
     </div>
     @auth
-        @if (auth()->user()->acounts)
+        @if (auth()->user()->accounts->count() > 0))
             <nav class="navbar fixed-bottom navbar-light bg-light">
                 <div class="container-fluid d-flex justify-content-evenly text-center">
                     <a href="{{ route('home') }}" class="text-dark"><i class="bi bi-house fs-4"></i></a>
