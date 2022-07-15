@@ -1,0 +1,74 @@
+body, html {
+    background-color: #131B43;
+    margin: 0;
+    padding: 0;
+}
+
+#app {
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-bottom: 60px;
+    padding-top: 80px
+}
+
+#navbar-top {
+    background-color: #fff;
+    color: #000;
+    transition: all .1s ease-out
+}
+
+.text-success {
+    color: #81DAB8 !important;
+}
+
+.text-danger {
+    color: #C04F63 !important;
+}
+
+.text-primary {
+    color: #4E62E9 !important;
+}
+
+.btn-link.active {
+    box-shadow: none;
+    color: #0d6efd !important
+}
+
+.btn-primary {
+    background-color: #303154;
+    border-color: #303154;
+}
+
+.btn-primary:hover {
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
+    color: #303154;
+}
+
+.btn-outline-primary {
+    border-color: #303154;
+}
+
+.btn-outline-primary:hover {
+    background-color: #303154;
+    border-color: #303154
+}
+
+.text-primary {
+    color: #000000 !important
+}
+
+.page-info, .page-title {
+    transition: all .1s ease-out
+}
+
+.offcanvas {
+    min-width: 100%
+}
+
+.blurry-text {
+    color: transparent;
+    text-shadow: 0 0 32px #000
+}
+
+/*# sourceMappingURL=custom.css.map*/
