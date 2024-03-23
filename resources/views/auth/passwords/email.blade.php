@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+    <div id="navbar-top" class="card fixed-top bg-transparent">
+        <div class="card-body">
+            <h1 class="page-title float-end text-white">MyCash</h1>
+        </div>
+    </div>
     <div class="container p-3">
         <h1 class="fw-bold text-light">¿Necesitas recuperar tu contraseña?</h1>
         <p class="text-light">Solicita una nueva contraseña</p>
@@ -11,7 +16,7 @@
                 <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" placeholder="name@example.com" value="{{ old('email') }}" required autocomplete="email">
                 <label for="email">{{ __('Correo Electrónico') }}</label>
             </div>
-            <button type="submit" class="btn btn-primary btn-lg w-100">{{ __('Solicitar nueva contraseña') }}</button>
+            <button type="submit" class="btn btn-light btn-lg w-100">{{ __('Solicitar nueva contraseña') }}</button>
         </form>
     </div>
 @endsection

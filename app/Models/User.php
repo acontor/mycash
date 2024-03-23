@@ -55,4 +55,14 @@ class User extends Authenticatable implements WebAuthnAuthenticatable
     {
         return $this->hasMany(Account::class)->orderBy('main', 'desc')->orderBy('created_at', 'desc');
     }
+
+    /**
+     * Get the activities that owns the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function activities()
+    {
+        return $this->hasMany(Activity::class)->orderBy('created_at', 'desc');
+    }
 }

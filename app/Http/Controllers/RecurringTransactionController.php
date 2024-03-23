@@ -26,33 +26,47 @@ class RecurringTransactionController extends Controller
     public function index(Account $account)
     {
         return view('recurring-transactions.index', [
-            'account' => $account,
+            'account'               => $account,
+            'previous'              => true,
             'recurringTransactions' => $this->recurringTransactionRepository->getAllRecurringTransactions($account),
+            'title'                 => 'Transacciones',
         ]);
     }
 
     public function create(Account $account)
     {
         return view('recurring-transactions.form', [
-            'route'     => route('recurring_transactions.store', $account),
-            'method'    => 'POST',
-            'account'   => $account,
+            'account'  => $account,
+            'method'   => 'POST',
+            'previous' => true,
+            'route'    => route('recurring_transactions.store', $account),
+            'title'    => 'Transacciones',
         ]);
     }
 
     public function store(StoreRecurringTransactionRequest $request)
     {
-        $recurringTransactionData = $request->only([
-            'account_id',
-            'category_id',
-            'name',
-            'description',
-            'frequency',
-            'amount',
-            'start_date',
-        ]);
-        $recurringTransaction = $this->recurringTransactionRepository->createRecurringTransaction($recurringTransactionData);
-        event(new ActivityEvent($recurringTransaction, 'recurring_transaction', 'Transacción recurrente creada', 'Se ha creado la transacción ' . $recurringTransaction->name, '/recurring_transactions/' . $recurringTransaction->id));
+        $recurringTransaction = $this->recurringTransactionRepository->createRecurringTransaction(
+            $request->only([
+                'account_id',
+                'category_id',
+                'name',
+                'description',
+                'frequency',
+                'amount',
+                'start_date',
+                'remaining',
+            ])
+        );
+
+        event(new ActivityEvent(
+            $recurringTransaction,
+            'recurring_transaction',
+            'Transacción recurrente creada',
+            'Se ha creado la transacción ' . $recurringTransaction->name,
+            '/recurring_transactions/' . $recurringTransaction->id
+        ));
+        
         return redirect()->route('recurring_transactions.index', $recurringTransaction->account_id);
     }
 
@@ -65,29 +79,47 @@ class RecurringTransactionController extends Controller
     public function show($recurringTransactionId)
     {
         return view('recurring-transactions.show', [
-            'recurringTransaction' => $this->recurringTransactionRepository->getRecurringTransactionById($recurringTransactionId)
+            'previous'             => true,
+            'recurringTransaction' => $this->recurringTransactionRepository->getRecurringTransactionById(
+                $recurringTransactionId
+            ),
+            'title'                => 'Transacciones',
         ]);
     }
 
     public function edit($recurringTransactionId)
     {
         return view('recurring-transactions.form', [
-            'route'                 => route('recurring_transactions.update', $recurringTransactionId),
             'method'                => 'PUT',
-            'recurringTransaction'  => $this->recurringTransactionRepository->getRecurringTransactionById($recurringTransactionId)
+            'previous'              => true,
+            'recurringTransaction'  => $this->recurringTransactionRepository->getRecurringTransactionById(
+                $recurringTransactionId
+            ),
+            'route'                 => route('recurring_transactions.update', $recurringTransactionId),
+            'title'                 => 'Transacciones',
         ]);
     }
 
     public function update(RecurringTransaction $recurringTransaction, UpdateRecurringTransactionRequest $request)
     {
-        $recurringTransactionData = $request->only([
-            'category_id',
-            'name',
-            'description',
-            'amount',
-        ]);
-        $this->recurringTransactionRepository->updateRecurringTransaction($recurringTransaction, $recurringTransactionData);
-        event(new ActivityEvent($recurringTransaction, 'recurring_transaction', 'Transacción recurrente actualizada', 'Se ha actualizado la transacción ' . $recurringTransaction->name, '/recurring_transactions/' . $recurringTransaction->id));
+        $this->recurringTransactionRepository->updateRecurringTransaction(
+            $recurringTransaction,
+            $request->only([
+                'category_id',
+                'name',
+                'description',
+                'amount',
+            ])
+        );
+
+        event(new ActivityEvent(
+            $recurringTransaction,
+            'recurring_transaction',
+            'Transacción recurrente actualizada',
+            'Se ha actualizado la transacción ' . $recurringTransaction->name,
+            '/recurring_transactions/' . $recurringTransaction->id)
+        );
+        
         return redirect()->route('recurring_transactions.index', $recurringTransaction->account_id);
     }
 }

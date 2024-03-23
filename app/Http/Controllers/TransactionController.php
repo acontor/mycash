@@ -25,8 +25,10 @@ class TransactionController extends Controller
     public function create()
     {
         return view('transactions.form', [
-            'route'     => route('transactions.store'),
-            'method'    => 'POST',
+            'method'   => 'POST',
+            'previous' => true,
+            'route'    => route('transactions.store'),
+            'title'    => 'Transacciones',
         ]);
     }
 
@@ -48,7 +50,15 @@ class TransactionController extends Controller
         ]);
         $transaction = $this->transactionRepository->createTransaction($transactionData);
         $this->transactionRepository->createBalanceAccount($transaction);
-        event(new ActivityEvent($transaction, 'transaction', 'Transacción creada', 'Se ha creado la transacción ' . $transaction->name, '/transactions/' . $transaction->id));
+
+        event(new ActivityEvent(
+            $transaction,
+            'transaction',
+            'Transacción creada',
+            'Se ha creado la transacción '.$transaction->name,
+            route('transactions.show', $transaction->id)
+        ));
+        
         return redirect()->route('accounts.show', $transaction->account_id);
     }
 
@@ -61,7 +71,9 @@ class TransactionController extends Controller
     public function show($transaction)
     {
         return view('transactions.show', [
-            'transaction' => $this->transactionRepository->getTransactionById($transaction)
+            'previous'    => true,
+            'transaction' => $this->transactionRepository->getTransactionById($transaction),
+            'title'       => 'Transacciones',
         ]);
     }
 
@@ -74,8 +86,10 @@ class TransactionController extends Controller
     public function edit(Transaction $transaction)
     {
         return view('transactions.form', [
-            'route'       => route('transactions.update', $transaction->id),
             'method'      => 'PUT',
+            'previous'    => true,
+            'route'       => route('transactions.update', $transaction->id),
+            'title'       => 'Transacciones',
             'transaction' => $transaction,
         ]);
     }
@@ -100,7 +114,15 @@ class TransactionController extends Controller
         $before_amount = $transaction->amount;
         $this->transactionRepository->updateTransaction($transaction, $transactionData);
         $this->transactionRepository->updateBalanceAccount($transaction, $before_amount);
-        event(new ActivityEvent($transaction, 'transaction', 'Transacción actualizada', 'Se ha actualizado la transacción ' . $transaction->name, '/transactions/' . $transaction->id));
+
+        event(new ActivityEvent(
+            $transaction,
+            'transaction',
+            'Transacción actualizada',
+            'Se ha actualizado la transacción '.$transaction->name,
+            route('transactions.show', $transaction->id)
+        ));
+
         return redirect()->route('accounts.show', $transaction->account_id);
     }
 
@@ -114,7 +136,15 @@ class TransactionController extends Controller
     {
         $this->transactionRepository->deleteTransaction($transaction);
         $this->transactionRepository->deleteBalanceAccount($transaction);
-        event(new ActivityEvent($transaction, 'transaction', 'Transacción eliminada', 'Se ha eliminado la transacción ' . $transaction->name, '/transactions/' . $transaction->id));
+
+        event(new ActivityEvent(
+            $transaction,
+            'transaction',
+            'Transacción eliminada',
+            'Se ha eliminado la transacción ' . $transaction->name,
+            route('transactions.show', $transaction->id)
+        ));
+
         return redirect()->route('accounts.show', $transaction->account_id);
     }
 }

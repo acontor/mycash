@@ -1,75 +1,103 @@
-html, body {
+body, html {
+    background-color: #131B43;
+    background-image: url("/images/background.png");
     margin: 0;
     padding: 0;
-    background-color: #FEFEFE;
 }
 
 #app {
     overflow-x: hidden;
     overflow-y: auto;
-    padding-top: 80px;
     padding-bottom: 60px;
 }
 
+#content {
+    padding-top: 80px;
+}
+
 #navbar-top {
-    color: black;
-    background-color: white;
-    -webkit-transition: all 0.1s ease-out;
-    -moz-transition: all 0.1s ease-out;
-    -o-transition: all 0.1s ease-out;
-    -ms-transition: all 0.1s ease-out;
-    transition: all 0.1s ease-out;
+    background-color: #fff;
+    color: #000;
+    transition: all .1s ease-out
 }
 
-.btn-link.active {
-    color: #0d6efd !important;
-    box-shadow: none;
+.bg-primary {
+    background-color: #131B43 !important;
 }
 
-.btn-primary {
-    background-color: #A33244;
-    border-color: #A33244;
+.text-success {
+    color: #81DAB8 !important;
 }
 
-.btn-primary:hover {
-    background-color: #a22036;
-    border-color: #a22036;
-}
-
-.btn-outline-primary {
-    border-color: #A33244;
-}
-
-.btn-outline-primary:hover {
-    background-color: #A33244;
-    border-color: #A33244;
+.text-danger {
+    color: #C04F63 !important;
 }
 
 .text-primary {
-    color: #A33244 !important;
+    color: #4E62E9 !important;
 }
 
-.page-title {
-    -webkit-transition: all 0.1s ease-out;
-    -moz-transition: all 0.1s ease-out;
-    -o-transition: all 0.1s ease-out;
-    -ms-transition: all 0.1s ease-out;
-    transition: all 0.1s ease-out;
+.text-info {
+    color: #131B43 !important;
 }
 
-.page-info {
-    -webkit-transition: all 0.1s ease-out;
-    -moz-transition: all 0.1s ease-out;
-    -o-transition: all 0.1s ease-out;
-    -ms-transition: all 0.1s ease-out;
-    transition: all 0.1s ease-out;
+.text-primary {
+    color: #000000 !important
+}
+
+.text-secondary {
+    color: #dddddd !important
+}
+
+.text-muted {
+    color: #aaaaaa !important
+}
+
+.btn-link.active {
+    box-shadow: none;
+    color: #0d6efd !important
+}
+
+.btn-primary {
+    background-color: #303154;
+    border-color: #303154;
+}
+
+.btn-primary:hover {
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
+    color: #303154;
+}
+
+.btn-outline-primary {
+    border-color: #303154;
+}
+
+.btn-outline-primary:hover {
+    background-color: #303154;
+    border-color: #303154
+}
+
+.no-btn-secondary {
+    background-color: none;
+    border: none;
+    color: #dddddd;
+}
+
+.page-info, .page-title {
+    transition: all .1s ease-out
 }
 
 .offcanvas {
-    min-width: 100%;
+    min-width: 100%
 }
 
 .blurry-text {
-    text-shadow: 0 0 32px black;
     color: transparent;
+    text-shadow: 0 0 32px #000
+}
+
+.card {
+    background-color: #131B43;
+    border: 0;
 }

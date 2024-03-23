@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+    <div id="navbar-top" class="card fixed-top bg-transparent">
+        <div class="card-body">
+            <h1 class="page-title float-end text-white">MyCash</h1>
+        </div>
+    </div>
     <div class="container p-3">
         <h1 class="fw-bold text-light">¡Únete a nosotros!</h1>
         <p class="text-light">Empieza a ahorrar</p>
@@ -23,7 +28,7 @@
                 <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation" id="password_confirmation" placeholder="Password" required autocomplete="new-password">
                 <label for="password_confirmation">{{ __('Confirmar Contraseña') }}</label>
             </div>
-            <button type="submit" class="btn btn-primary btn-lg w-100">{{ __('Crear cuenta') }}</button>
+            <button type="submit" class="btn btn-light btn-lg w-100">{{ __('Crear cuenta') }}</button>
         </form>
     </div>
 @endsection

@@ -1,4 +1,4 @@
-var staticCacheName = "pwa-v" + new Date().getTime();
+var staticCacheName = "mycash-v" + new Date().getTime();
 var filesToCache = [
     '/offline',
     '/css/app.css',
@@ -30,7 +30,7 @@ self.addEventListener('activate', event => {
         caches.keys().then(cacheNames => {
             return Promise.all(
                 cacheNames
-                    .filter(cacheName => (cacheName.startsWith("pwa-")))
+                    .filter(cacheName => (cacheName.startsWith("mycash-")))
                     .filter(cacheName => (cacheName !== staticCacheName))
                     .map(cacheName => caches.delete(cacheName))
             );

@@ -26,6 +26,7 @@ class AccountController extends Controller
     {
         return view('accounts.index', [
             'accounts' => $this->accountRepository->getAllAccounts(),
+            'title'    => 'Cuentas'
         ]);
     }
 
@@ -37,38 +38,53 @@ class AccountController extends Controller
     public function show($accountId)
     {
         return view('accounts.show', [
-            'account' => $this->accountRepository->getAccountById($accountId),
+            'account'  => $this->accountRepository->getAccountById($accountId),
+            'previous' => true,
+            'title'    => 'Cuentas'
         ]);
     }
 
     public function create()
     {
         return view('accounts.form', [
-            'route'     => route('accounts.store'),
-            'method'    => 'POST',
+            'method'   => 'POST',
+            'previous' => true,
+            'route'    => route('accounts.store'),
+            'title'    => 'Cuentas'
         ]);
     }
 
     public function store(StoreAccountRequest $request)
     {
-        $accountData = $request->only([
-            'name',
-            'description',
-            'balance',
-            'category_id',
-            'main',
-        ]);
-        $account = $this->accountRepository->createAccount($accountData);
-        event(new ActivityEvent($account, 'account', 'Cuenta creada', 'Se ha creado la cuenta ' . $account->name, '/accounts/' . $account->id));
+        $account = $this->accountRepository->createAccount(
+            $request->only([
+                'name',
+                'description',
+                'balance',
+                'category_id',
+                'main',
+            ])
+        );
+
+        event(new ActivityEvent(
+            $account,
+            'account',
+            'Cuenta creada',
+            'Se ha creado la cuenta ' . $account->name,
+            route('accounts.show', $account->id)
+        ));
+
         return redirect()->route('accounts.index');
     }
 
     public function edit($accountId)
     {
         return view('accounts.form', [
-            'route'     => route('accounts.update', $accountId),
-            'method'    => 'PUT',
-            'account'   => $this->accountRepository->getAccountById($accountId),
+            'account'  => $this->accountRepository->getAccountById($accountId),
+            'method'   => 'PUT',
+            'previous' => true,
+            'route'    => route('accounts.update', $accountId),
+            'title'    => 'Cuentas'
         ]);
     }
 
@@ -81,22 +97,40 @@ class AccountController extends Controller
      */
     public function update(UpdateAccountRequest $request, Account $account)
     {
-        $accountData = $request->only([
-            'name',
-            'description',
-            'balance',
-            'category_id',
-            'main',
-        ]);
-        $this->accountRepository->updateAccount($account, $accountData);
-        event(new ActivityEvent($account, 'account', 'Cuenta actualizada', 'Se ha actualizado la cuenta ' . $account->name, '/accounts/' . $account->id));
+        $this->accountRepository->updateAccount(
+            $account,
+            $request->only([
+                'name',
+                'description',
+                'balance',
+                'category_id',
+                'main',
+            ])
+        );
+
+        event(new ActivityEvent(
+            $account,
+            'account',
+            'Cuenta actualizada',
+            'Se ha actualizado la cuenta '.$account->name,
+            route('accounts.show', $account->id)
+        ));
+
         return redirect()->route('accounts.index');
     }
 
     public function destroy(Account $account)
     {
         $this->accountRepository->deleteAccount($account);
-        event(new ActivityEvent($account, 'account', 'Cuenta eliminada', 'Se ha eliminado la cuenta ' . $account->name, '/accounts/' . $account->id));
+
+        event(new ActivityEvent(
+            $account,
+            'account',
+            'Cuenta eliminada',
+            'Se ha eliminado la cuenta '.$account->name,
+            route('accounts.show', $account->id)
+        ));
+
         return redirect()->route('accounts.index');
     }
 }

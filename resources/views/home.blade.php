@@ -1,10 +1,27 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="px-3">
+    <div id="navbar-top" class="card bg-transparent">
+        <div class="card-body">
+            <h1 class="page-title float-end text-white">MyCash</h1>
+        </div>
+    </div>
+    <div class="px-4 mt-4 mb-5">
         <div>
-            <h1 class="mb-0 text-light">Hola {{ auth()->user()->name }}</h1>
-            <small class="text-light">¡Tú puedes ahorrar!</small>
+            @php
+                $hora = Carbon\Carbon::now()->hour;
+            @endphp
+
+            @if ($hora >= 5 && $hora < 12)
+                <h1 class="mb-0 text-light">¡Buenos días!</h1>
+                <small class="text-light">Tenemos un nuevo día por delante para cuidar nuestros ahorros</small>
+            @elseif ($hora >= 12 && $hora < 18)
+                <h1 class="mb-0 text-light">¡Buenas tardes!</h1>
+                <small class="text-light">Sigue controlando tus gastos, es la base de tu presente y tu futuro</small>
+            @else
+                <h1 class="mb-0 text-light">¡Buenas noches!</h1>
+                <small class="text-light">Seguro que ha sido un gran día, echa un último vistazo a tus cuentas por hoy</small>
+            @endif
         </div>
         <div class="row mt-5">
             <div class="col-6">
@@ -32,7 +49,7 @@
                                 <span class="ml-2 {{ auth()->user()->accounts()->sum('balance') >= 0 ? 'text-success' : 'text-danger' }}">{{ auth()->user()->accounts()->sum('balance') >= 0 ? '+ ' : '' }} {{ auth()->user()->accounts()->sum('balance') }} €</span>
                             </h5>
                             <p class="card-text">
-                                <small class="text-muted">
+                                <small>
                                     <i class="bi bi-bank"></i>
                                     <span class="ml-2">Patrimonio</span>
                                 </small>
@@ -60,11 +77,12 @@
             </div>
         </div>
         <div class="card mt-4">
-            <div class="card-body">
+            <div class="card-body text-secondary">
                 <h5 class="card-title">
-                    Sugerencias
+                    Próximas funciones
                 </h5>
-                <p class="card-text">¿Sabías que puedes compartir una de tus cuentas con la persona que tu quieras?</p>
+                <img src="{{ url("/images/announcements/share-accounts.png") }}" class="w-100 shadow p-1 bg-body rounded mt-3" alt="Compartir cuentas">
+                <p class="card-text mt-4">¿Sabías que puedes compartir una de tus cuentas con la persona que tu quieras?</p>
                 <small>Próximamente</small>
                 {{-- <a href="{{ route('accounts.index') }}" class="btn btn-dark">
                     <i class="bi bi-share-alt"></i>
