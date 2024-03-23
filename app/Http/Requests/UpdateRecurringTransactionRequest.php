@@ -24,10 +24,10 @@ class UpdateRecurringTransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_id'   => 'required|exists:categories,id',
-            'name'          => 'required|string|max:255',
-            'amount'        => 'required|numeric',
-            'description'   => 'nullable|string|max:255',
+            'category_id' => 'required|exists:categories,id',
+            'name'        => 'required|string|max:255',
+            'amount'      => 'required|numeric',
+            'description' => 'nullable|string|max:255',
         ];
     }
 }

@@ -24,13 +24,13 @@ class StoreRecurringTransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'          => 'required|string|max:255',
-            'category_id'   => 'required|exists:categories,id',
-            'account_id'    => 'required|exists:accounts,id',
-            'amount'        => 'required|numeric',
-            'frequency'     => 'required|numeric|min:1',
-            'start_date'    => 'required|date',
-            'description'   => 'nullable|string|max:255',
+            'name'        => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id',
+            'account_id'  => 'required|exists:accounts,id',
+            'amount'      => 'required|numeric',
+            'frequency'   => 'required|numeric|min:1',
+            'start_date'  => 'required|date',
+            'description' => 'nullable|string|max:255',
         ];
     }
 }

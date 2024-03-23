@@ -24,10 +24,10 @@ class StoreAccountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'          => 'required|string|max:255',
-            'balance'       => 'required|numeric',
-            'category_id'   => 'required|exists:categories,id',
-            'email'         => 'nullable|exists:users,email',
+            'name'        => 'required|string|max:255',
+            'balance'     => 'required|numeric',
+            'category_id' => 'required|exists:categories,id',
+            'email'       => 'nullable|exists:users,email',
         ];
     }
 }

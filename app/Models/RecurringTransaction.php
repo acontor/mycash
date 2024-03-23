@@ -28,9 +28,9 @@ class RecurringTransaction extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'date' => 'datetime',
+        'date'       => 'datetime',
         'start_date' => 'datetime',
-        'next_date' => 'datetime',
+        'next_date'  => 'datetime',
     ];
 
     public function account()

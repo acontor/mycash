@@ -25,9 +25,9 @@ class UpdateAccountRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'          => 'required|string|max:255',
-            'description'   => 'nullable|string|max:255',
-            'category_id'   => 'required|exists:categories,id',
+            'name'        => 'required|string|max:255',
+            'description' => 'nullable|string|max:255',
+            'category_id' => 'required|exists:categories,id',
         ];
     }
 }
