@@ -1,5 +1,5 @@
 body, html {
-    background-color: #131B43;
+    background-color: #301689;
     background-image: url("/images/background.png");
     margin: 0;
     padding: 0;
@@ -22,7 +22,7 @@ body, html {
 }
 
 .bg-primary {
-    background-color: #131B43 !important;
+    background-color: #301689 !important;
 }
 
 .text-success {
@@ -98,6 +98,15 @@ body, html {
 }
 
 .card {
-    background-color: #131B43;
+    background-color: #301689;
     border: 0;
+}
+
+.modal-content {
+    background-color: #4c10ce;
+    color: #ffffff;
+}
+
+.btn-close {
+    color: #ffffff;
 }

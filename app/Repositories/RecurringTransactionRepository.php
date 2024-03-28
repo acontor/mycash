@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Interfaces\RecurringTransactionRepositoryInterface;
-use App\Models\Activity;
 use App\Models\RecurringTransaction;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -22,25 +21,25 @@ class RecurringTransactionRepository implements RecurringTransactionRepositoryIn
     public function createRecurringTransaction(array $recurringTansactionData): RecurringTransaction
     {
         return RecurringTransaction::create([
-            'name'          => $recurringTansactionData['name'],
-            'description'   => $recurringTansactionData['description'],
-            'category_id'   => $recurringTansactionData['category_id'],
-            'account_id'    => $recurringTansactionData['account_id'],
-            'amount'        => $recurringTansactionData['amount'],
-            'frequency'     => $recurringTansactionData['frequency'],
-            'start_date'    => $recurringTansactionData['start_date'],
-            'remaining'     => $recurringTansactionData['remaining'],
-            'next_date'     => $this->getNextDate($recurringTansactionData['start_date']),
+            'name'        => $recurringTansactionData['name'],
+            'description' => $recurringTansactionData['description'],
+            'category_id' => $recurringTansactionData['category_id'],
+            'account_id'  => $recurringTansactionData['account_id'],
+            'amount'      => $recurringTansactionData['amount'],
+            'frequency'   => $recurringTansactionData['frequency'],
+            'start_date'  => $recurringTansactionData['start_date'],
+            'remaining'   => $recurringTansactionData['remaining'],
+            'next_date'   => $this->getNextDate($recurringTansactionData['start_date']),
         ]);
     }
 
     public function updateRecurringTransaction($recurringTransaction, array $recurringTransactionData)
     {
         $recurringTransaction->update([
-            'name'          => $recurringTransactionData['name'],
-            'category_id'   => $recurringTransactionData['category_id'],
-            'amount'        => $recurringTransactionData['amount'],
-            'description'   => $recurringTransactionData['description'],
+            'name'        => $recurringTransactionData['name'],
+            'category_id' => $recurringTransactionData['category_id'],
+            'amount'      => $recurringTransactionData['amount'],
+            'description' => $recurringTransactionData['description'],
         ]);
     }
 

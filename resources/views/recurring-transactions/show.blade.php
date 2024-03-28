@@ -5,7 +5,10 @@
         <div class="row text-center mt-4 mb-5">
             <div class="col-12">
                 @if ($recurringTransaction->active)
-                    <a href="{{ route('recurring_transactions.edit', $recurringTransaction) }}" class="text-decoration-none text-white fw-bold">
+                    <a
+                        href="{{ route('recurring_transactions.edit', $recurringTransaction) }}"
+                        class="text-decoration-none text-white fw-bold"
+                    >
                         <i class="bi bi-pencil-square"></i><br>
                         Editar<br>
                         Transacción
@@ -35,11 +38,11 @@
                     </div>
                     <div class="col-12 mt-3">
                         Fecha de la operación
-                        <span class="float-end">{{ $recurringTransaction->created_at->format('d/m/Y') }}</span>
+                        <span class="float-end">{{ $recurringTransaction->start_date->format('d/m/Y') }}</span>
                     </div>
                     <div class="col-12 mt-3">
                         Día de cobro
-                        <span class="float-end">{{ $recurringTransaction->created_at->format('d') }}</span>
+                        <span class="float-end">{{ $recurringTransaction->start_date->format('d') }}</span>
                     </div>
                     <div class="col-12 mt-3">
                         Frecuencia en meses

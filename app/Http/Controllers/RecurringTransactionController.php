@@ -29,18 +29,17 @@ class RecurringTransactionController extends Controller
             'account'               => $account,
             'previous'              => true,
             'recurringTransactions' => $this->recurringTransactionRepository->getAllRecurringTransactions($account),
-            'title'                 => 'Transacciones',
+            'titleRight'            => $account->name,
         ]);
     }
 
     public function create(Account $account)
     {
         return view('recurring-transactions.form', [
-            'account'  => $account,
-            'method'   => 'POST',
-            'previous' => true,
-            'route'    => route('recurring_transactions.store', $account),
-            'title'    => 'Transacciones',
+            'account'    => $account,
+            'method'     => 'POST',
+            'route'      => route('recurring_transactions.store', $account),
+            'title'      => 'Transacciones',
         ]);
     }
 
@@ -90,13 +89,12 @@ class RecurringTransactionController extends Controller
     public function edit($recurringTransactionId)
     {
         return view('recurring-transactions.form', [
-            'method'                => 'PUT',
-            'previous'              => true,
-            'recurringTransaction'  => $this->recurringTransactionRepository->getRecurringTransactionById(
+            'method'               => 'PUT',
+            'recurringTransaction' => $this->recurringTransactionRepository->getRecurringTransactionById(
                 $recurringTransactionId
             ),
-            'route'                 => route('recurring_transactions.update', $recurringTransactionId),
-            'title'                 => 'Transacciones',
+            'route'                => route('recurring_transactions.update', $recurringTransactionId),
+            'title'                => 'Transacciones',
         ]);
     }
 

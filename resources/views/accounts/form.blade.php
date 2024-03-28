@@ -3,7 +3,6 @@
 @section('content')
     <div id="content">
         <div class="m-3 mt-4 mb-5">
-            <h1 class="fw-bold text-light">{{ $method == 'POST' ? 'Nueva' : 'Editar' }} cuenta</h1>
             <p class="text-light">Estas cuentas te ayudarán a administrar tu dinero</p>
             <form method="POST" action="{{ $route }}">
                 @method($method)

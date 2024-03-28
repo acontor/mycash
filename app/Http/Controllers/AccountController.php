@@ -25,8 +25,8 @@ class AccountController extends Controller
     public function index()
     {
         return view('accounts.index', [
-            'accounts' => $this->accountRepository->getAllAccounts(),
-            'title'    => 'Cuentas'
+            'accounts'   => $this->accountRepository->getAllAccounts(),
+            'titleRight' => 'Cuentas'
         ]);
     }
 
@@ -37,20 +37,20 @@ class AccountController extends Controller
      */
     public function show($accountId)
     {
+        $account = $this->accountRepository->getAccountById($accountId);
+
         return view('accounts.show', [
-            'account'  => $this->accountRepository->getAccountById($accountId),
-            'previous' => true,
-            'title'    => 'Cuentas'
+            'account'       => $account,
+            'titleRight'    => $account->name,
         ]);
     }
 
     public function create()
     {
         return view('accounts.form', [
-            'method'   => 'POST',
-            'previous' => true,
-            'route'    => route('accounts.store'),
-            'title'    => 'Cuentas'
+            'method'     => 'POST',
+            'route'      => route('accounts.store'),
+            'titleRight' => 'Nueva cuenta',
         ]);
     }
 
@@ -80,11 +80,10 @@ class AccountController extends Controller
     public function edit($accountId)
     {
         return view('accounts.form', [
-            'account'  => $this->accountRepository->getAccountById($accountId),
-            'method'   => 'PUT',
-            'previous' => true,
-            'route'    => route('accounts.update', $accountId),
-            'title'    => 'Cuentas'
+            'account'    => $this->accountRepository->getAccountById($accountId),
+            'method'     => 'PUT',
+            'route'      => route('accounts.update', $accountId),
+            'titleRight' => 'Editar cuenta'
         ]);
     }
 
@@ -127,8 +126,8 @@ class AccountController extends Controller
             $account,
             'account',
             'Cuenta eliminada',
-            'Se ha eliminado la cuenta '.$account->name,
-            route('accounts.show', $account->id)
+            'Se ha eliminado la cuenta '.$account->name.' y todas sus transacciones',
+            ''
         ));
 
         return redirect()->route('accounts.index');

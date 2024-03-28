@@ -6,8 +6,7 @@
     data-bs-backdrop="true"
 >
     <div class="offcanvas-header">
-        <p></p>
-        <h2 class="text-white" id="offcanvasOperationsLabel">Operaciones</h2>
+        <h1 class="offcanvas-title float-end text-white fw-bold" id="offcanvasOperationsLabel">Operaciones</h1>
     </div>
     <div class="offcanvas-body small">
         <div class="row text-center">

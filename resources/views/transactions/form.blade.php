@@ -3,7 +3,6 @@
 @section('content')
     <div id="content">
         <div class="m-3 mt-4 mb-5">
-            <h1 class="fw-bold text-light">{{ $method == 'POST' ? 'Nueva' : 'Editar' }} transacción</h1>
             <p class="text-light">LLeva un control de tus movimientos</p>
             <form method="POST" action="{{ $route }}">
                 @method($method)
@@ -47,13 +46,13 @@
                     <select class="form-control @error('category_id') is-invalid @enderror" name="category_id">
                         <option value="">Seleccione una categoría</option>
                         @foreach (\App\Models\Category::where('type', 'transactions')->get() as $category)
-                            <option value="{{ $category->id }}" {{ isset($transaction) && $transaction->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                            <option value="{{ $category->id }}" {{ isset($recurringTransaction) && $recurringTransaction->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
                         @endforeach
                     </select>
                     <label for="category_id">{{ __('Categoría') }}</label>
                     @if ($errors->has('category_id'))
                         <span class="invalid-feedback" role="alert">
-                            <strong>{{ $errors->first('category_id') }}</strong>
+                            <strong>{{ $errors->first('account_id') }}</strong>
                         </span>
                     @endif
                 </div>

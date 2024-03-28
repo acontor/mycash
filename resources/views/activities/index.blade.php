@@ -46,7 +46,7 @@
                                 <a href="{{ $notification->action }}" class="text-decoration-none text-secondary">
                                     <h5 class="my-2">{{ $notification->name }}</h5>
                                     <div class="py-2">
-                                        <small class="text-muted">{{ $notification->description }}.</small>
+                                        <small class="text-secondary">{{ $notification->description }}.</small>
                                     </div>
                                 </a>
                             </div>

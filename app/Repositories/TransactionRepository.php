@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Interfaces\TransactionRepositoryInterface;
 use App\Models\Transaction;
-use App\Models\Activity;
 
 class TransactionRepository implements TransactionRepositoryInterface
 {
@@ -16,24 +15,24 @@ class TransactionRepository implements TransactionRepositoryInterface
     public function createTransaction(array $ransactionData)
     {
         return Transaction::create([
-            'name'          => $ransactionData['name'],
-            'category_id'   => $ransactionData['category_id'],
-            'account_id'    => $ransactionData['account_id'],
-            'amount'        => $ransactionData['amount'],
-            'date'          => $ransactionData['date'],
-            'description'   => $ransactionData['description'],
+            'name'        => $ransactionData['name'],
+            'category_id' => $ransactionData['category_id'],
+            'account_id'  => $ransactionData['account_id'],
+            'amount'      => $ransactionData['amount'],
+            'date'        => $ransactionData['date'],
+            'description' => $ransactionData['description'],
         ]);
     }
 
     public function updateTransaction($transaction, array $transactionData)
     {
         $transaction->update([
-            'name'          => $transactionData['name'],
-            'category_id'   => $transactionData['category_id'],
-            'account_id'    => $transactionData['account_id'],
-            'amount'        => $transactionData['amount'],
-            'date'          => $transactionData['date'],
-            'description'   => $transactionData['description'],
+            'name'        => $transactionData['name'],
+            'category_id' => $transactionData['category_id'],
+            'account_id'  => $transactionData['account_id'],
+            'amount'      => $transactionData['amount'],
+            'date'        => $transactionData['date'],
+            'description' => $transactionData['description'],
         ]);
     }
 

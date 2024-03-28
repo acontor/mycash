@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\ActivityRepositoryInterface;
-use App\Models\Activity;
-use Illuminate\Http\Request;
 
 class ActivityController extends Controller
 {
@@ -28,7 +26,7 @@ class ActivityController extends Controller
             'activities.index',
             [
                 'activities' => $activities,
-                'title'      => 'Notificaciones'
+                'titleRight' => 'Actividades'
             ]
         );
     }
