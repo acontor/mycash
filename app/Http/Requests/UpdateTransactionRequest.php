@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Interfaces\AccountRepositoryInterface;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateTransactionRequest extends FormRequest
@@ -11,9 +12,11 @@ class UpdateTransactionRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize(): bool
+    public function authorize(AccountRepositoryInterface $accountRepository): bool
     {
-        return true;
+        $account = $accountRepository->getAccountById($this->account_id);
+
+        return $this->user()->can('update', $this->transaction) && $this->user()->can('viewNormal', $account);
     }
 
     /**

@@ -46,7 +46,7 @@
                     <select class="form-control @error('category_id') is-invalid @enderror" name="category_id">
                         <option value="">Seleccione una categoría</option>
                         @foreach (\App\Models\Category::where('type', 'transactions')->get() as $category)
-                            <option value="{{ $category->id }}" {{ isset($recurringTransaction) && $recurringTransaction->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                            <option value="{{ $category->id }}" {{ isset($transaction) && $transaction->category_id === $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
                         @endforeach
                     </select>
                     <label for="category_id">{{ __('Categoría') }}</label>

@@ -3,24 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
+use Illuminate\Contracts\View\View;
 
 class HomeController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
         $accounts = auth()->user()->accounts->pluck('id');
         $transactionsToday = Transaction::whereIn('account_id', $accounts)

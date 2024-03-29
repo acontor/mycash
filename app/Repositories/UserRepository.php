@@ -7,17 +7,17 @@ use App\Models\User;
 
 class UserRepository implements UserRepositoryInterface
 {
-    public function getUserById()
+    public function getUser(): User
     {
-        return auth()->user();
+        return User::findOrFail(auth()->id());
     }
 
-    public function updateUser(array $userData)
+    public function updateUser(array $userData): void
     {
         $user = User::findOrFail(auth()->id());
         $user->update([
-            'name' => $userData['name'],
-            'email' => $userData['email'],
+            'email'    => $userData['email'],
+            'name'     => $userData['name'],
             'password' => bcrypt($userData['password']),
         ]);
     }

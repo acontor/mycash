@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('description')->nullable();
             $table->string('frequency');
-            $table->string('amount');
+            $table->decimal('amount', 10, 2)->default(0);
             $table->timestamp('start_date');
             $table->timestamp('next_date')->nullable();
             $table->boolean('active')->default(true);

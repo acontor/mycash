@@ -10,16 +10,16 @@ class RecurringTransaction extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
+        'account_id',
+        'amount',
+        'category_id',
+        'date',
         'description',
         'frequency',
-        'amount',
-        'date',
-        'account_id',
-        'category_id',
-        'start_date',
+        'name',
         'next_date',
         'remaining',
+        'start_date',
     ];
 
     /**
@@ -29,18 +29,13 @@ class RecurringTransaction extends Model
      */
     protected $casts = [
         'date'       => 'datetime',
-        'start_date' => 'datetime',
         'next_date'  => 'datetime',
+        'start_date' => 'datetime',
     ];
 
     public function account()
     {
         return $this->belongsTo(Account::class);
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
     }
 
     public function category()

@@ -8,23 +8,26 @@ use App\Http\Requests\UpdateRecurringTransactionRequest;
 use App\Interfaces\RecurringTransactionRepositoryInterface;
 use App\Models\Account;
 use App\Models\RecurringTransaction;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class RecurringTransactionController extends Controller
 {
-    private RecurringTransactionRepositoryInterface $recurringTransactionRepository;
-
-    public function __construct(RecurringTransactionRepositoryInterface $recurringTransactionRepository)
-    {
-        $this->recurringTransactionRepository = $recurringTransactionRepository;
-    }
+    public function __construct(
+        private RecurringTransactionRepositoryInterface $recurringTransactionRepository
+    ) {}
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Account $account
+     *
+     * @return View
      */
     public function index(Account $account)
     {
+        $this->authorize('viewNormal', $account);
+
         return view('recurring-transactions.index', [
             'account'               => $account,
             'previous'              => true,
@@ -33,6 +36,28 @@ class RecurringTransactionController extends Controller
         ]);
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param RecurringTransaction $recurringTransaction
+     *
+     * @return View
+     */
+    public function show(RecurringTransaction $recurringTransaction): View
+    {
+        $this->authorize('view', $recurringTransaction);
+
+        return view('recurring-transactions.show', [
+            'recurringTransaction' => $recurringTransaction,
+            'title'                => 'Transacciones',
+        ]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return View
+     */
     public function create(Account $account)
     {
         return view('recurring-transactions.form', [
@@ -43,7 +68,14 @@ class RecurringTransactionController extends Controller
         ]);
     }
 
-    public function store(StoreRecurringTransactionRequest $request)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param StoreRecurringTransactionRequest $request
+     *
+     * @return RedirectResponse
+     */
+    public function store(StoreRecurringTransactionRequest $request): RedirectResponse
     {
         $recurringTransaction = $this->recurringTransactionRepository->createRecurringTransaction(
             $request->only([
@@ -70,36 +102,38 @@ class RecurringTransactionController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Transaction  $transaction
-     * @return \Illuminate\Http\Response
+     * @param RecurringTransaction $recurringTransaction
+     *
+     * @return View
      */
-    public function show($recurringTransactionId)
+    public function edit(RecurringTransaction $recurringTransaction): View
     {
-        return view('recurring-transactions.show', [
-            'previous'             => true,
-            'recurringTransaction' => $this->recurringTransactionRepository->getRecurringTransactionById(
-                $recurringTransactionId
-            ),
-            'title'                => 'Transacciones',
-        ]);
-    }
+        $this->authorize('update', $recurringTransaction);
 
-    public function edit($recurringTransactionId)
-    {
         return view('recurring-transactions.form', [
             'method'               => 'PUT',
-            'recurringTransaction' => $this->recurringTransactionRepository->getRecurringTransactionById(
-                $recurringTransactionId
-            ),
-            'route'                => route('recurring_transactions.update', $recurringTransactionId),
+            'recurringTransaction' => $recurringTransaction,
+            'route'                => route('recurring_transactions.update', $recurringTransaction->id),
             'title'                => 'Transacciones',
         ]);
     }
 
-    public function update(RecurringTransaction $recurringTransaction, UpdateRecurringTransactionRequest $request)
-    {
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  UpdateRecurringTransactionRequest $request
+     * @param  RecurringTransaction              $recurringTransaction
+     *
+     * @return RedirectResponse
+     */
+    public function update(
+        UpdateRecurringTransactionRequest $request,
+        RecurringTransaction $recurringTransaction
+    ): RedirectResponse {
+        $this->authorize('update', $recurringTransaction);
+
         $this->recurringTransactionRepository->updateRecurringTransaction(
             $recurringTransaction,
             $request->only([

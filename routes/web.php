@@ -2,13 +2,13 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\GoalController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RecurringTransactionController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Laragear\WebAuthn\WebAuthn;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,35 +21,80 @@ use Laragear\WebAuthn\WebAuthn;
 |
 */
 
-Route::get('/offline', function () {
-    return view('offline');
-});
+Route::view('/offline', 'offline');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/', function () {
-        return redirect('home');
-    });
-    Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('account');
+    Route::redirect('/', '/home');
 
     Route::get('accounts/create', [AccountController::class, 'create'])->name('accounts.create');
     Route::post('accounts', [AccountController::class, 'store'])->name('accounts.store');
-    Route::resource('accounts', AccountController::class)->middleware('account')->except(['create','store']);
-
-    Route::resource('transactions', TransactionController::class)->middleware('account');
-
-    Route::get('recurring_transactions/{account}',                    [RecurringTransactionController::class, 'index'])->name('recurring_transactions.index')->middleware('account');
-    Route::get('recurring_transactions/create/{account?}',            [RecurringTransactionController::class, 'create'])->name('recurring_transactions.create')->middleware('account');
-    Route::post('recurring_transactions/store',                       [RecurringTransactionController::class, 'store'])->name('recurring_transactions.store')->middleware('account');
-    Route::get('recurring_transactions/{recurring_transaction}/show', [RecurringTransactionController::class, 'show'])->name('recurring_transactions.show')->middleware('account');
-    Route::get('recurring_transactions/{recurring_transaction}/edit', [RecurringTransactionController::class, 'edit'])->name('recurring_transactions.edit')->middleware('account');
-    Route::put('recurring_transactions/{recurring_transaction}',      [RecurringTransactionController::class, 'update'])->name('recurring_transactions.update')->middleware('account');
-
-    Route::resource('activities', ActivityController::class)->middleware('account');
 
     Route::get('profile', [UserController::class, 'edit'])->name('profile.edit');
     Route::put('profile', [UserController::class, 'update'])->name('profile.update');
 });
 
-Auth::routes();
-WebAuthn::routes();
+Route::middleware(['auth', 'account'])->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+    Route::resource('accounts', AccountController::class)->except(['create','store']);
+
+    Route::resource('transactions', TransactionController::class);
+    
+    Route::resource('activities', ActivityController::class);
+});
+
+Route::middleware(['auth', 'account'])->prefix('recurring_transactions')->group(function () {
+    Route::get(
+        '/{account}',
+        [RecurringTransactionController::class, 'index']
+    )->name('recurring_transactions.index');
+    Route::get(
+        '/create/{account?}',
+        [RecurringTransactionController::class, 'create']
+    )->name('recurring_transactions.create');
+    Route::post(
+        '/store',
+        [RecurringTransactionController::class, 'store']
+    )->name('recurring_transactions.store');
+    Route::get(
+        '/{recurring_transaction}/show',
+        [RecurringTransactionController::class, 'show']
+    )->name('recurring_transactions.show');
+    Route::get(
+        '/{recurring_transaction}/edit',
+        [RecurringTransactionController::class, 'edit']
+    )->name('recurring_transactions.edit');
+    Route::put(
+        '/{recurring_transaction}',
+        [RecurringTransactionController::class, 'update']
+    )->name('recurring_transactions.update');
+});
+
+Route::middleware(['auth', 'account'])->prefix('goals')->group(function () {
+    Route::get(
+        '/{account}',
+        [GoalController::class, 'index']
+    )->name('goals.index');
+    Route::get(
+        '/create/{account?}',
+        [GoalController::class, 'create']
+    )->name('goals.create');
+    Route::post(
+        '/store',
+        [GoalController::class, 'store']
+    )->name('goals.store');
+    Route::get(
+        '/{goal}/show',
+        [GoalController::class, 'show']
+    )->name('goals.show');
+    Route::get(
+        '/{goal}/edit',
+        [GoalController::class, 'edit']
+    )->name('goals.edit');
+    Route::put(
+        '/{goal}',
+        [GoalController::class, 'update']
+    )->name('goals.update');
+});
+
+Auth::routes();

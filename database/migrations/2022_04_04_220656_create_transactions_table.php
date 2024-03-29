@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained('categories');
             $table->string('name');
             $table->longText('description')->nullable();
-            $table->double('amount');
+            $table->decimal('amount', 10, 2)->default(0);
             $table->timestamp('date');
             $table->timestamps();
         });

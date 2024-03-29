@@ -14,7 +14,7 @@ class UpdateAccountRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->route('account') && $this->route('account')->user_id == auth()->user()->id;
+        return $this->user()->can('update', $this->account);
     }
 
     /**

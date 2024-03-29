@@ -20,6 +20,10 @@
                 <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password" placeholder="Password" required autocomplete="current-password">
                 <label for="password">{{ __('Contraseña') }}</label>
             </div>
+            <div class="form-check text-white mt-2">
+                <input class="form-check-input" type="checkbox" name="remember" id="remember">
+                <label class="form-check-label" for="remember">Recordar sesión</label>
+            </div>
             <div class="mb-5 mt-3">
                 @if (Route::has('password.request'))
                     <span class="text-light">¿No recuerdas tu contraseña? / </span><a class="text-decoration-none text-light fw-bold" href="{{ route('password.request') }}">{{ __('Recuperar') }}</a>

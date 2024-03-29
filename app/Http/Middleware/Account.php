@@ -17,6 +17,7 @@ class Account
         if (auth()->user()->accounts->count() == 0) {
             return redirect()->route('accounts.create');
         }
+
         return $next($request);
     }
 }

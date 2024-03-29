@@ -10,17 +10,23 @@ class Account extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'description',
-        'category_id',
         'balance',
-        'user_id',
+        'category_id',
+        'description',
         'main',
+        'name',
+        'type',
+        'user_id',
     ];
 
-    public function transactions()
+    public function category()
     {
-        return $this->hasMany(Transaction::class);
+        return $this->belongsTo(Category::class);
+    }
+
+    public function goals()
+    {
+        return $this->hasMany(Goal::class);
     }
 
     public function recurring_transactions()
@@ -28,8 +34,8 @@ class Account extends Model
         return $this->hasMany(RecurringTransaction::class);
     }
 
-    public function category()
+    public function transactions()
     {
-        return $this->belongsTo(Category::class);
+        return $this->hasMany(Transaction::class);
     }
 }

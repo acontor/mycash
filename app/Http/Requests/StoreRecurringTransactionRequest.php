@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Interfaces\AccountRepositoryInterface;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRecurringTransactionRequest extends FormRequest
@@ -11,9 +12,11 @@ class StoreRecurringTransactionRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize(): bool
+    public function authorize(AccountRepositoryInterface $accountRepository): bool
     {
-        return true;
+        $account = $accountRepository->getAccountById($this->account_id);
+    
+        return $this->user()->can('viewNormal', $account);
     }
 
     /**

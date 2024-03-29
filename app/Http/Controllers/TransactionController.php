@@ -7,22 +7,38 @@ use App\Http\Requests\StoreTransactionRequest;
 use App\Http\Requests\UpdateTransactionRequest;
 use App\Interfaces\TransactionRepositoryInterface;
 use App\Models\Transaction;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class TransactionController extends Controller
 {
-    private TransactionRepositoryInterface $transactionRepository;
+    public function __construct(
+        private TransactionRepositoryInterface $transactionRepository
+    ) {}
 
-    public function __construct(TransactionRepositoryInterface $transactionRepository)
+    /**
+     * Display the specified resource.
+     *
+     * @param Transaction $transaction
+     *
+     * @return View
+     */
+    public function show(Transaction $transaction): View
     {
-        $this->transactionRepository = $transactionRepository;
+        $this->authorize('view', $transaction);
+
+        return view('transactions.show', [
+            'transaction' => $transaction,
+            'title'       => 'Transacción',
+        ]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function create()
+    public function create(): View
     {
         return view('transactions.form', [
             'method'     => 'POST',
@@ -34,10 +50,11 @@ class TransactionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreTransactionRequest $request
+     *
+     * @return RedirectResponse
      */
-    public function store(StoreTransactionRequest $request)
+    public function store(StoreTransactionRequest $request): RedirectResponse
     {
         $transaction = $this->transactionRepository->createTransaction(
             $request->only([
@@ -63,27 +80,16 @@ class TransactionController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Transaction  $transaction
-     * @return \Illuminate\Http\Response
-     */
-    public function show($transaction)
-    {
-        return view('transactions.show', [
-            'transaction' => $this->transactionRepository->getTransactionById($transaction),
-            'title'       => 'Transacción',
-        ]);
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Transaction  $transaction
-     * @return \Illuminate\Http\Response
+     * @param Transaction $transaction
+     *
+     * @return View
      */
-    public function edit(Transaction $transaction)
+    public function edit(Transaction $transaction): View
     {
+        $this->authorize('update', $transaction);
+
         return view('transactions.form', [
             'method'      => 'PUT',
             'route'       => route('transactions.update', $transaction->id),
@@ -95,12 +101,15 @@ class TransactionController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Transaction  $transaction
-     * @return \Illuminate\Http\Response
+     * @param UpdateTransactionRequest $request
+     * @param Transaction              $transaction
+     *
+     * @return RedirectResponse
      */
-    public function update(UpdateTransactionRequest $request, Transaction $transaction)
+    public function update(UpdateTransactionRequest $request, Transaction $transaction): RedirectResponse
     {
+        $this->authorize('update', $transaction);
+
         $transactionData = $request->only([
             'name',
             'category_id',
@@ -109,6 +118,7 @@ class TransactionController extends Controller
             'date',
             'description',
         ]);
+
         $before_amount = $transaction->amount;
         $this->transactionRepository->updateTransaction($transaction, $transactionData);
         $this->transactionRepository->updateBalanceAccount($transaction, $before_amount);
@@ -127,11 +137,14 @@ class TransactionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Transaction  $transaction
-     * @return \Illuminate\Http\Response
+     * @param  Transaction $transaction
+     *
+     * @return RedirectResponse
      */
-    public function destroy(Transaction $transaction)
+    public function destroy(Transaction $transaction): RedirectResponse
     {
+        $this->authorize('delete', $transaction);
+
         $this->transactionRepository->deleteTransaction($transaction->id);
         $this->transactionRepository->deleteBalanceAccount($transaction);
 
@@ -139,7 +152,7 @@ class TransactionController extends Controller
             $transaction,
             'transaction',
             'Transacción eliminada',
-            'Se ha eliminado la transacción ' . $transaction->name,
+            'Se ha eliminado la transacción '.$transaction->name,
             ''
         ));
 

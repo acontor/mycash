@@ -3,29 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\ActivityRepositoryInterface;
+use Illuminate\Contracts\View\View;
 
 class ActivityController extends Controller
 {
-    private ActivityRepositoryInterface $activityRepository;
-
-    public function __construct(ActivityRepositoryInterface $activityRepository)
-    {
-        $this->activityRepository = $activityRepository;
-    }
+    public function __construct(
+        private ActivityRepositoryInterface $activityRepository
+    ) {}
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
-        $activities = $this->activityRepository->getAllActivities();
-
         return view(
             'activities.index',
             [
-                'activities' => $activities,
+                'activities' => $this->activityRepository->getAllActivities(),
                 'titleRight' => 'Actividades'
             ]
         );

@@ -4,43 +4,44 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateUserRequest;
 use App\Interfaces\UserRepositoryInterface;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
 {
-    private UserRepositoryInterface $userRepository;
-
-    public function __construct(UserRepositoryInterface $userRepository)
-    {
-        $this->userRepository = $userRepository;
-    }
+    public function __construct(
+        private UserRepositoryInterface $userRepository
+    ) {}
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
-    public function edit()
+    public function edit(): View
     {
         return view('profile.form', [
-            'user' => $this->userRepository->getUserById(),
+            'user' => $this->userRepository->getUser(),
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Preference  $preference
-     * @return \Illuminate\Http\Response
+     * @param  UpdateUserRequest $request
+     *
+     * @return RedirectResponse
      */
-    public function update(UpdateUserRequest $request)
+    public function update(UpdateUserRequest $request): RedirectResponse
     {
-        $userData = $request->only([
-            'name',
-            'email',
-            'password',
-        ]);
-        $this->userRepository->updateUser($userData);
+        $this->userRepository->updateUser(
+            $request->only([
+                'name',
+                'email',
+                'password',
+            ])
+        );
+
         return redirect()->route('profile.edit')->with('success', 'Perfil actualizado correctamente');
     }
 }

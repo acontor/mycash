@@ -2,13 +2,14 @@
 
 namespace App\Interfaces;
 
+use App\Models\Transaction;
+
 interface TransactionRepositoryInterface
 {
-    public function getTransactionById($transactionId);
-    public function createTransaction(array $transactionData);
-    public function updateTransaction($transaction, array $transactionData);
-    public function deleteTransaction($transactionId);
-    public function createBalanceAccount($transaction);
-    public function updateBalanceAccount($transaction, $befre_amount);
-    public function deleteBalanceAccount($transaction);
+    public function createTransaction(array $transactionData): Transaction;
+    public function updateTransaction(Transaction $transaction, array $transactionData): void;
+    public function deleteTransaction(int $transactionId): void;
+    public function createBalanceAccount(Transaction $transaction): void;
+    public function updateBalanceAccount(Transaction $transaction, float $before_amount): void;
+    public function deleteBalanceAccount(Transaction $transaction): void;
 }

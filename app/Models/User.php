@@ -2,17 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
-use Laragear\WebAuthn\Contracts\WebAuthnAuthenticatable;
-use Laragear\WebAuthn\WebAuthnAuthentication;
 
-class User extends Authenticatable implements WebAuthnAuthenticatable
+class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, WebAuthnAuthentication;
+    use HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -20,8 +16,8 @@ class User extends Authenticatable implements WebAuthnAuthenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
         'email',
+        'name',
         'password',
     ];
 
@@ -47,7 +43,7 @@ class User extends Authenticatable implements WebAuthnAuthenticatable
     /**
      * Get the accounts that owns the user.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function accounts()
     {
@@ -57,7 +53,7 @@ class User extends Authenticatable implements WebAuthnAuthenticatable
     /**
      * Get the activities that owns the user.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function activities()
     {
