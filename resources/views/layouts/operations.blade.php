@@ -33,17 +33,16 @@
             </div>
             <div class="col-6 mb-5">
                 <a href="#" class="text-decoration-none text-white disabled">
-                    <i class="bi bi-share"></i>
-                    <br>Compartir
-                    <br>Cuenta
-                    <br><small>(Próximamente)</small>
+                    <i class="bi bi-award"></i>
+                    <br>Nuevo
+                    <br>Objetivo
                 </a>
             </div>
             <div class="col-6 mb-5">
                 <a href="#" class="text-decoration-none text-white disabled">
-                    <i class="bi bi-award"></i>
-                    <br>Nueva
-                    <br>Meta
+                    <i class="bi bi-share"></i>
+                    <br>Compartir
+                    <br>Cuenta
                     <br><small>(Próximamente)</small>
                 </a>
             </div>

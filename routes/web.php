@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RecurringTransactionController;
@@ -37,10 +38,10 @@ Route::middleware(['auth', 'account'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     Route::resource('accounts', AccountController::class)->except(['create','store']);
-
-    Route::resource('transactions', TransactionController::class);
     
     Route::resource('activities', ActivityController::class);
+
+    Route::resource('transactions', TransactionController::class);
 });
 
 Route::middleware(['auth', 'account'])->prefix('recurring_transactions')->group(function () {
@@ -95,6 +96,33 @@ Route::middleware(['auth', 'account'])->prefix('goals')->group(function () {
         '/{goal}',
         [GoalController::class, 'update']
     )->name('goals.update');
+});
+
+Route::middleware(['auth', 'account'])->prefix('categories')->group(function () {
+    Route::get(
+        '/',
+        [CategoriesController::class, 'index']
+    )->name('categories.index');
+    Route::get(
+        '/create/{type}',
+        [CategoriesController::class, 'create']
+    )->name('categories.create');
+    Route::post(
+        '/store',
+        [CategoriesController::class, 'store']
+    )->name('categories.store');
+    Route::get(
+        '/{category}/edit',
+        [CategoriesController::class, 'edit']
+    )->name('categories.edit');
+    Route::put(
+        '/{category}',
+        [CategoriesController::class, 'update']
+    )->name('categories.update');
+    Route::delete(
+        '/{category}',
+        [CategoriesController::class, 'destroy']
+    )->name('categories.destroy');
 });
 
 Auth::routes();

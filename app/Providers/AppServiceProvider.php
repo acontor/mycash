@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Interfaces\ActivityRepositoryInterface;
+use App\Interfaces\CategoryRepositoryInterface;
 use App\Interfaces\GoalRepositoryInterface;
 use App\Models\Account;
 use App\Models\Goal;
@@ -13,6 +14,7 @@ use App\Policies\GoalPolicy;
 use App\Policies\RecurringTransactionPolicy;
 use App\Policies\TransactionPolicy;
 use App\Repositories\ActivityRepository;
+use App\Repositories\CategoryRepository;
 use App\Repositories\GoalRepository;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +30,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(ActivityRepositoryInterface::class, ActivityRepository::class);
+        $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
         $this->app->bind(GoalRepositoryInterface::class, GoalRepository::class);
     }
 

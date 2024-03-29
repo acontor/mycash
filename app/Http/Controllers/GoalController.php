@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\ActivityEvent;
+use App\Events\CreateActivityEvent;
 use App\Http\Requests\StoreGoalRequest;
 use App\Http\Requests\UpdateGoalRequest;
 use App\Interfaces\GoalRepositoryInterface;
@@ -63,7 +63,7 @@ class GoalController extends Controller
             ])
         );
 
-        event(new ActivityEvent(
+        event(new CreateActivityEvent(
             $goal,
             'goal',
             'Objetivo creado',
@@ -114,7 +114,7 @@ class GoalController extends Controller
 
         $goal = $goal->refresh();
 
-        event(new ActivityEvent(
+        event(new CreateActivityEvent(
             $goal,
             'goal',
             'Objetivo actualizado',
@@ -131,7 +131,7 @@ class GoalController extends Controller
 
         $this->goalRepository->deleteGoal($goal);
 
-        event(new ActivityEvent(
+        event(new CreateActivityEvent(
             $goal,
             'goal',
             'Objetivo eliminado',

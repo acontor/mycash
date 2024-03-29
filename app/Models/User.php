@@ -59,4 +59,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Activity::class)->orderBy('created_at', 'desc');
     }
+
+    /**
+     * Get the categories that owns the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function categories()
+    {
+        return $this->hasMany(Category::class)->orderBy('type', 'asc')->orderBy('name', 'asc');
+    }
 }

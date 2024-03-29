@@ -56,10 +56,10 @@ class AccountRepository implements AccountRepositoryInterface
         ]);
     }
 
-    public function deleteAccount($accountId): void
+    public function deleteAccount(Account $account): void
     {
-        Transaction::whereAccountId($accountId)->delete();
-        RecurringTransaction::whereAccountId($accountId)->delete();
-        Account::destroy($accountId);
+        Transaction::whereAccountId($account->id)->delete();
+        RecurringTransaction::whereAccountId($account->id)->delete();
+        $account->delete();
     }
 }

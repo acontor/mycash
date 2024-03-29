@@ -2,30 +2,19 @@
 
 namespace App\Listeners;
 
-use App\Events\ActivityEvent;
+use App\Events\CreateActivityEvent;
 use App\Models\Activity;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
-class ActivityListener
+class CreateActivityListener
 {
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
     /**
      * Handle the event.
      *
-     * @param  \App\Events\ActivityEvent  $event
+     * @param CreateActivityEvent $event
+     *
      * @return void
      */
-    public function handle(ActivityEvent $event)
+    public function handle(CreateActivityEvent $event): void
     {
         Activity::create([
             'name'          => $event->name,

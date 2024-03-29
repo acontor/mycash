@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\ActivityEvent;
+use App\Events\CreateActivityEvent;
 use App\Http\Requests\StoreAccountRequest;
 use App\Http\Requests\UpdateAccountRequest;
 use App\Interfaces\AccountRepositoryInterface;
@@ -88,7 +88,7 @@ class AccountController extends Controller
             ])
         );
 
-        event(new ActivityEvent(
+        event(new CreateActivityEvent(
             $account,
             'account',
             'Cuenta creada',
@@ -141,7 +141,7 @@ class AccountController extends Controller
             ])
         );
 
-        event(new ActivityEvent(
+        event(new CreateActivityEvent(
             $account,
             'account',
             'Cuenta actualizada',
@@ -165,7 +165,7 @@ class AccountController extends Controller
 
         $this->accountRepository->deleteAccount($account);
 
-        event(new ActivityEvent(
+        event(new CreateActivityEvent(
             $account,
             'account',
             'Cuenta eliminada',

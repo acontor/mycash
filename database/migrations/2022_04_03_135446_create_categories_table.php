@@ -15,8 +15,11 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users');
             $table->string('name');
-            $table->string('type');
+            $table->enum('type', ['Cuentas', 'Transacciones', 'Objetivos']);
+            $table->string('icon')->nullable();
+            $table->string('color')->nullable();
         });
     }
 

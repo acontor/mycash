@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\ActivityEvent;
+use App\Events\CreateActivityEvent;
 use App\Http\Requests\StoreRecurringTransactionRequest;
 use App\Http\Requests\UpdateRecurringTransactionRequest;
 use App\Interfaces\RecurringTransactionRepositoryInterface;
@@ -90,7 +90,7 @@ class RecurringTransactionController extends Controller
             ])
         );
 
-        event(new ActivityEvent(
+        event(new CreateActivityEvent(
             $recurringTransaction,
             'recurring_transaction',
             'Transacción recurrente creada',
@@ -144,7 +144,7 @@ class RecurringTransactionController extends Controller
             ])
         );
 
-        event(new ActivityEvent(
+        event(new CreateActivityEvent(
             $recurringTransaction,
             'recurring_transaction',
             'Transacción recurrente actualizada',

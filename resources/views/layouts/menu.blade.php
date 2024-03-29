@@ -23,7 +23,9 @@
         </div>
         <div class="body-content p-3 mt-3">
             <h5 class="fw-bold">General</h5>
-            <a href="{{ route('profile.edit') }}" class="btn btn-link">Perfil</a>
+            <a href="{{ route('profile.edit') }}" class="btn btn-link text-white">Perfil</a>
+            <br>
+            <a href="{{ route('categories.index') }}" class="btn btn-link text-white">Categorías</a>
         </div>
     </div>
     <div class="offcanvas-footer text-center bg-primary pb-3">
@@ -35,7 +37,6 @@
         >
             <i class="bi bi-caret-down-fill"></i>
         </button>
-        {{-- Dropdown bootstrap 5 --}}
     </div>
     {{-- <div class="offcanvas-footer">
         <div class="text-center p-3 pb-4">

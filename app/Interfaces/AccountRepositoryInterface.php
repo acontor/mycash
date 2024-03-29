@@ -12,5 +12,5 @@ interface AccountRepositoryInterface
     public function getAccountById(int $accountId): Account;
     public function createAccount(array $accountData): Account;
     public function updateAccount(Account $account, array $accountData): void;
-    public function deleteAccount(Account $accountId): void;
+    public function deleteAccount(Account $account): void;
 }

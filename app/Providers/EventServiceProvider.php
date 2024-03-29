@@ -2,12 +2,13 @@
 
 namespace App\Providers;
 
-use App\Events\ActivityEvent;
-use App\Listeners\ActivityListener;
+use App\Events\CreateActivityEvent;
+use App\Events\UserCreatedEvent;
+use App\Listeners\CreateActivityListener;
+use App\Listeners\CreateDefaultCategoriesToNewUserListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -20,8 +21,11 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        ActivityEvent::class => [
-            ActivityListener::class,
+        CreateActivityEvent::class => [
+            CreateActivityListener::class,
+        ],
+        UserCreatedEvent::class => [
+            CreateDefaultCategoriesToNewUserListener::class,
         ],
     ];
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\ActivityEvent;
+use App\Events\CreateActivityEvent;
 use App\Http\Requests\StoreTransactionRequest;
 use App\Http\Requests\UpdateTransactionRequest;
 use App\Interfaces\TransactionRepositoryInterface;
@@ -68,7 +68,7 @@ class TransactionController extends Controller
         );
         $this->transactionRepository->createBalanceAccount($transaction);
 
-        event(new ActivityEvent(
+        event(new CreateActivityEvent(
             $transaction,
             'transaction',
             'Transacción creada',
@@ -123,7 +123,7 @@ class TransactionController extends Controller
         $this->transactionRepository->updateTransaction($transaction, $transactionData);
         $this->transactionRepository->updateBalanceAccount($transaction, $before_amount);
 
-        event(new ActivityEvent(
+        event(new CreateActivityEvent(
             $transaction,
             'transaction',
             'Transacción actualizada',
@@ -145,10 +145,10 @@ class TransactionController extends Controller
     {
         $this->authorize('delete', $transaction);
 
-        $this->transactionRepository->deleteTransaction($transaction->id);
+        $this->transactionRepository->deleteTransaction($transaction);
         $this->transactionRepository->deleteBalanceAccount($transaction);
 
-        event(new ActivityEvent(
+        event(new CreateActivityEvent(
             $transaction,
             'transaction',
             'Transacción eliminada',

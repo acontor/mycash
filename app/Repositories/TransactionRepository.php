@@ -31,9 +31,9 @@ class TransactionRepository implements TransactionRepositoryInterface
         ]);
     }
 
-    public function deleteTransaction(int $transactionId): void
+    public function deleteTransaction(Transaction $transaction): void
     {
-        Transaction::destroy($transactionId);
+        $transaction->delete();
     }
 
     public function createBalanceAccount(Transaction $transaction): void
