@@ -3,13 +3,7 @@
 @section('content')
     <div id="content">
         @php
-            $percent = 0;
-
-            foreach ($account->goals as $key => $goal) {
-                $percent += $goal->amount > 0 ? ($goal->contributed * 100) / $goal->amount : 0;
-            }
-
-            $totalPercent = $account->goals->count() > 0 ? $percent / $account->goals->count() : 0;
+            $totalPercent = $account->getTotalPercent();
         @endphp
 
         <div class="row m-3 text-light mb-4">
@@ -72,7 +66,8 @@
                                                     <small class="text-muted">{{ $goal->category->name }}</small>
                                                 </div>
                                                 <div class="col-6 text-end">
-                                                    <span class="text-white fw-bold">{{ $goal->amount > 0 ? ($goal->contributed * 100) / $goal->amount : 0 }} %</span><br>
+                                                    <span class="text-white fw-bold">{{ $goal->getPercent() }} %</span>
+                                                    <br>
                                                     <small>{{ $goal->end_date->format('d/m/Y') }}</small>
                                                 </div>
                                             </div>
@@ -90,27 +85,42 @@
                                     </div>
                                     <div class="row mb-3 mt-5">
                                         <div class="col-12 mb-3">
-                                            <a href="{{ route('goals.edit', $goal) }}" class="text-decoration-none text-white fw-bold">
+                                            <a
+                                                href="{{ route('goals.edit', $goal) }}"
+                                                class="text-decoration-none text-white fw-bold"
+                                            >
                                                 <i class="bi bi-receipt"></i> Reutilizar objetivo
                                             </a>
                                         </div>
                                         <div class="col-12 mb-3">
-                                            <button type="submit" class="btn btn-link p-0 text-decoration-none text-white fw-bold">
+                                            <button
+                                                type="submit"
+                                                class="btn btn-link p-0 text-decoration-none text-white fw-bold"
+                                            >
                                                 <i class="bi bi-file-x"></i> Registrar aporte
                                             </button>
                                         </div>
                                         <div class="col-12 mb-3">
-                                            <button type="submit" class="btn btn-link p-0 text-decoration-none text-white fw-bold">
+                                            <button
+                                                type="submit"
+                                                class="btn btn-link p-0 text-decoration-none text-white fw-bold"
+                                            >
                                                 <i class="bi bi-file-x"></i> Registrar gasto
                                             </button>
                                         </div>
                                         <div class="col-12 mb-3">
-                                            <button type="submit" class="btn btn-link p-0 text-decoration-none text-white fw-bold">
+                                            <button
+                                                type="submit"
+                                                class="btn btn-link p-0 text-decoration-none text-white fw-bold"
+                                            >
                                                 <i class="bi bi-file-x"></i> Retirar dinero
                                             </button>
                                         </div>
                                         <div class="col-12 mb-3">
-                                            <a href="{{ route('goals.edit', $goal) }}" class="text-decoration-none text-white fw-bold">
+                                            <a
+                                                href="{{ route('goals.edit', $goal) }}"
+                                                class="text-decoration-none text-white fw-bold"
+                                            >
                                                 <i class="bi bi-pencil-square"></i> Editar objetivo
                                             </a>
                                         </div>
@@ -122,7 +132,11 @@
                     @empty
                         <div class="col-12 mb-3">
                             <div class="py-3">
-                                <span class="text-muted">No hay objetivos registrados / </span><a href="{{ route('goals.create', $account) }}" class="text-decoration-none text-light fw-bold">Crear uno</a>
+                                <span class="text-muted">No hay objetivos registrados / </span>
+                                <a
+                                    href="{{ route('goals.create', $account) }}"
+                                    class="text-decoration-none text-light fw-bold"
+                                >Crear uno</a>
                             </div>
                         </div>
                     @endforelse

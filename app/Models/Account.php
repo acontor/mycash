@@ -38,4 +38,15 @@ class Account extends Model
     {
         return $this->hasMany(Transaction::class);
     }
+
+    public function getTotalPercent(): float
+    {
+        $percent = 0;
+
+        foreach ($this->goals as $goal) {
+            $percent += $goal->amount > 0 ? ($goal->contributed * 100) / $goal->amount : 0;
+        }
+
+        return $this->goals->count() > 0 ? $percent / $this->goals->count() : 0;
+    }
 }

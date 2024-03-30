@@ -40,4 +40,9 @@ class Goal extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function getPercent(): float
+    {
+        return $this->amount > 0 ? ($this->contributed * 100) / $this->amount : 0;
+    }
 }

@@ -2,15 +2,13 @@
 
 @section('content')
     <div id="content">
-        <div class="row text-center mt-3 pb-3">
-            <div class="col-12">
-                <a href="{{ route('accounts.create') }}" class="text-decoration-none text-white fw-bold">
-                    <i class="bi bi-wallet2"></i>
-                    <br>
-                    <small>
-                        Nueva
-                        <br>Cuenta
-                    </small>
+        <div class="row justify-content-center mt-3 pb-3">
+            <div class="col-3 mb-4 text-center text-white">
+                <a
+                    href="{{ route('accounts.create') }}"
+                    class="text-white text-decoration-none"
+                >
+                    <i class="bi bi-plus-circle-fill fs-1"></i>
                 </a>
             </div>
         </div>
@@ -19,7 +17,10 @@
                 <div class="card-body text-white">
                     <div class="row mt-3">
                         <div class="col-11">
-                            <p><i class="bi bi-info-circle me-1"></i> Recuerda que puedes crear cuentas para tomar el control de tus objetivos</p>
+                            <p>
+                                <i class="bi bi-info-circle me-1"></i>
+                                Recuerda que puedes crear cuentas para tomar el control de tus objetivos
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -37,10 +38,17 @@
                     <hr>
                     @foreach ($accounts as $index => $account)
                         <div class="col-12">
-                            <a href="{{ route('accounts.show', $account->id) }}" class="text-decoration-none text-secondary">
+                            <a
+                                href="{{ route('accounts.show', $account->id) }}"
+                                class="text-decoration-none text-secondary"
+                            >
                                 <div class="py-3">
                                     <b class="text-secondary">{{ $account->name }}</b>
-                                    <div class="float-end {{ $account->balance >= 0 ? 'text-success' : 'text-danger' }}">{{ $account->balance >= 0 ? '+ ' : '' }} {{ $account->balance }} €</div>
+                                    <div
+                                        class="float-end text-{{ $account->balance >= 0 ? 'success' : 'danger' }} fs-5"
+                                    >
+                                        {{ $account->balance >= 0 ? '+ ' : '' }} {{ $account->balance }} €
+                                    </div>
                                     <br>
                                     <span class="text-muted">{{ $account->description }}</span>
                                 </div>
@@ -62,10 +70,19 @@
                         </div>
                         <hr>
                         @foreach ($goalAccounts as $index => $account)
+                            @php
+                                $percent = $account->getTotalPercent();
+                            @endphp
                             <div class="col-12">
-                                <a href="{{ route('accounts.show', $account->id) }}" class="text-decoration-none text-secondary">
+                                <a
+                                    href="{{ route('accounts.show', $account->id) }}"
+                                    class="text-decoration-none text-secondary"
+                                >
                                     <div class="py-3">
                                         <b class="text-secondary">{{ $account->name }}</b>
+                                        <div class="float-end {{ $percent > 0 ? 'text-success' : 'text-danger' }} fs-5">
+                                            {{ $percent }} %
+                                        </div>
                                         <br>
                                         <span class="text-muted">{{ $account->description }}</span>
                                     </div>
